@@ -2,7 +2,7 @@ const cors = require('cors');
 const express = require('express');
 
 // modules
-const ENV_VARS = require('./config/env-vars');
+const { ENV_VARS } = require('./config');
 
 // routes
 
