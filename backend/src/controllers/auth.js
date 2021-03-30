@@ -40,12 +40,21 @@ const login = async (req) => {
     email: user.email,
     token,
   };
-   
+
   await ValidToken.create({ token, uuid: tokenUuid });
 
   return { user: dataUser };
 };
 
+const getMe = async (req) => {
+  const { userId: id } = req;
+  const attributes = ['id', 'username', 'email'];
+  const user = await User.findOne({ where: id, attributes });
+
+  return { user };
+};
+
 module.exports = {
   login,
+  getMe,
 };
