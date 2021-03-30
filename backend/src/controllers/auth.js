@@ -1,15 +1,16 @@
 const { Op } = require('sequelize');
 const jwt = require('jsonwebtoken');
+const short = require('short-uuid');
 
 const { ENV_VARS } = require('../config');
 const { CustomError, verifyPassword } = require('../utils');
 
 const db = require('../models');
 const User = require('../models/user')(db.sequelize, db.Sequelize);
+const ValidToken = require('../models/validtoken')(db.sequelize, db.Sequelize);
 
 const login = async (req) => {
   const { username, password } = req.body;
-
   const user = await User.findOne({
     where: {
       [Op.or]: [
@@ -30,7 +31,8 @@ const login = async (req) => {
 
   if (!passwordsMatch) throw error;
 
-  const token = jwt.sign({ id: user.id }, ENV_VARS.SECRET_JWT);
+  const tokenUuid = short.generate();
+  const token = jwt.sign({ id: user.id, uuid: tokenUuid }, ENV_VARS.SECRET_JWT);
 
   const dataUser = {
     id: user.id,
@@ -38,10 +40,12 @@ const login = async (req) => {
     email: user.email,
     token,
   };
+   
+  await ValidToken.create({ token, uuid: tokenUuid });
 
   return { user: dataUser };
 };
 
 module.exports = {
-  login, 
+  login,
 };
