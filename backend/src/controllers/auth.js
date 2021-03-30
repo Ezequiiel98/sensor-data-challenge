@@ -54,7 +54,16 @@ const getMe = async (req) => {
   return { user };
 };
 
+const logout = async (req) => {
+  const { tokenUuid } = req;
+
+  await ValidToken.destroy({ where: { uuid: tokenUuid } });
+
+  return { message: 'Logout successful' };
+};
+
 module.exports = {
   login,
   getMe,
+  logout,
 };
