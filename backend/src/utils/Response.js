@@ -10,11 +10,12 @@ class Response {
   static error({
     res,
     error,
-    message,
-    status,
+    message = 'unknow error',
+    status = 500,
+    knowError = false,
   }) {
     console.log(error);
-    const resMessage = error.name === 'CustomError' ? message : 'unknow error';
+    const resMessage = knowError ? message : 'unknow error';
 
     return res.status(status).send({
       ok: false,

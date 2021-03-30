@@ -1,4 +1,5 @@
 const Response = require('./Response');
+const CustomError = require('./CustomError');
 
 const controllerWithTryCatch = ({
   callback,
@@ -18,6 +19,7 @@ const controllerWithTryCatch = ({
       error,
       message: error.message || 'unknow error',
       status: error.status || 500,
+      knowError: error instanceof CustomError,
     });
   }
 };

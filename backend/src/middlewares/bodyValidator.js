@@ -15,7 +15,7 @@ const bodyValidator = (validations) => async (req, res, next) => {
   const error = errors.array()[0].msg;
 
   return Response.error({
-    res, error, message: error, status: 400,
+    res, error, message: error, status: 400, knowError: true,
   });
 };
 
