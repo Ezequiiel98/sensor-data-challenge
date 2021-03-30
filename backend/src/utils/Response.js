@@ -14,12 +14,13 @@ class Response {
     status,
   }) {
     console.log(error);
+    const resMessage = error.name === 'CustomError' ? message : 'unknow error';
 
     return res.status(status).send({
       ok: false,
       status,
       data: {
-        message,
+        message: resMessage,
       },
     });
   }
