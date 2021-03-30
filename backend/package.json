@@ -19,7 +19,9 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "sequelize": "^6.6.2"
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.2",
+    "short-uuid": "^4.1.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

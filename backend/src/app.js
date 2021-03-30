@@ -5,6 +5,7 @@ const express = require('express');
 const { ENV_VARS } = require('./config');
 
 // routes
+const router = require('./routes');
 
 // app
 const app = express();
@@ -20,6 +21,7 @@ if (ENV_VARS.ENV_IS_DEV) {
 // app config
 app.use(cors());
 app.use(express.json());
+app.use(router);
 
 app.listen(ENV_VARS.PORT_APP, () => {
   console.log(`Server on port ${ENV_VARS.PORT_APP}`);
