@@ -33,4 +33,15 @@ authRouter.get(
   }),
 );
 
+authRouter.get(
+  '/logout',
+  [
+    decodeToken,
+  ],
+  controllerWithTryCatch({
+    callback: authController.logout,
+    statusSuccess: 200,
+  }),
+);
+
 module.exports = authRouter;
