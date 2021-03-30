@@ -1,5 +1,7 @@
 const { Op } = require('sequelize');
+const jwt = require('jsonwebtoken');
 
+const { ENV_VARS } = require('../config');
 const { CustomError, verifyPassword } = require('../utils');
 
 const db = require('../models');
@@ -28,15 +30,18 @@ const login = async (req) => {
 
   if (!passwordsMatch) throw error;
 
+  const token = jwt.sign({ id: user.id }, ENV_VARS.SECRET_JWT);
+
   const dataUser = {
     id: user.id,
     username: user.username,
     email: user.email,
+    token,
   };
 
   return { user: dataUser };
 };
 
 module.exports = {
-  login,
+  login, 
 };
