@@ -43,4 +43,14 @@ clientsRouter.put('/:id',
     statusSuccess: 201,
   }));
 
+clientsRouter.delete('/:id',
+  [
+    decodeToken,
+    validateToken,
+  ],
+  controllerWithTryCatch({
+    callback: clientsController.deleteClient,
+    statusSuccess: 201,
+  }));
+
 module.exports = clientsRouter;
