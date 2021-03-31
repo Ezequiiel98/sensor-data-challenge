@@ -32,4 +32,15 @@ clientsRouter.post('/',
     statusSuccess: 201,
   }));
 
+clientsRouter.put('/:id',
+  [
+    decodeToken,
+    validateToken,
+    bodyValidator(clientSchema.client),
+  ],
+  controllerWithTryCatch({
+    callback: clientsController.updateClient,
+    statusSuccess: 201,
+  }));
+
 module.exports = clientsRouter;
