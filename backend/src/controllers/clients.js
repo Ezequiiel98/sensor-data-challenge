@@ -1,3 +1,5 @@
+const { Op } = require('sequelize');
+
 const { ENV_VARS } = require('../config');
 const { CustomError } = require('../utils');
 
@@ -20,7 +22,33 @@ const createClient = async (req) => {
   return { client };
 };
 
+const updateClient = async (req) => {
+  delete req.body.id;
+  const { userId } = req;
+  const { id } = req.params;
+  const existsClient = await Client.findOne({
+    where: {
+      [Op.and]: [
+        { id },
+        { userId },
+      ],
+    },
+  });
+
+  if (!existsClient) {
+    throw new CustomError({
+      status: 404,
+      message: `Client with the id ${id} not found.`,
+    });
+  }
+
+  await Client.update({ ...req.body, userId }, { where: { id } });
+
+  return { message: `Client with id ${id} was update successfully` };
+};
+
 module.exports = {
   getAllClients,
   createClient,
+  updateClient,
 };
