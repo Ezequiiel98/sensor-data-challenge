@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Home from './../pages/Home.js';
+import Clients from './../pages/Clients.js';
 
 const routes = [
   {
@@ -13,7 +14,7 @@ const routes = [
     path: '/clients',
     exact: true,
     title: 'Clients',
-    component: () => <h1>Clients</h1>
+    component: () => <Clients />
   },
   {
     path: '/clients/new',
