@@ -47,8 +47,33 @@ const updateClient = async (req) => {
   return { message: `Client with id ${id} was update successfully` };
 };
 
+const deleteClient = async (req) => {
+  const { userId } = req;
+  const { id } = req.params;
+  const existsClient = await Client.findOne({
+    where: {
+      [Op.and]: [
+        { id },
+        { userId },
+      ],
+    },
+  });
+
+  if (!existsClient) {
+    throw new CustomError({
+      status: 404,
+      message: `Client with the id ${id} not found.`,
+    });
+  }
+
+  await existsClient.destroy();
+
+  return { message: `Client with id ${id} deleted successfully` };
+};
+
 module.exports = {
   getAllClients,
   createClient,
   updateClient,
+  deleteClient,
 };
