@@ -51,7 +51,7 @@ module.exports = {
       transitInsurance: {
         type: Sequelize.ENUM('si', 'no', 'opcional'),
       },
-      transitCageInsurance: {
+      transitCargeInsurance: {
         type: Sequelize.ENUM('si', 'no', 'opcional'),
       },
       active: {

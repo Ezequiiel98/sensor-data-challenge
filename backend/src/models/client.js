@@ -1,7 +1,7 @@
-'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Client extends Model {
     /**
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Client.belongsTo(models.User);
     }
-  };
+  }
   Client.init({
     businessName: DataTypes.STRING,
     rucNumber: DataTypes.INTEGER,
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     web: DataTypes.STRING,
     userId: DataTypes.INTEGER,
     transitInsurance: DataTypes.ENUM('si', 'no', 'opcional'),
-    transitCageInsurance: DataTypes.ENUM('si', 'no', 'opcional'),
+    transitCargeInsurance: DataTypes.ENUM('si', 'no', 'opcional'),
     active: DataTypes.BOOLEAN,
   }, {
     sequelize,
