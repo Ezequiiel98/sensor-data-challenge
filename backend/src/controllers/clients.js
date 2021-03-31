@@ -11,6 +11,16 @@ const getAllClients = async (req) => {
   return { clients };
 };
 
+const createClient = async (req) => {
+  delete req.body.id;
+  const { userId } = req;
+
+  const client = await Client.create({ ...req.body, userId });
+
+  return { client };
+};
+
 module.exports = {
   getAllClients,
+  createClient,
 };
