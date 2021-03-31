@@ -6,6 +6,28 @@ const { CustomError } = require('../utils');
 const db = require('../models');
 const Client = require('../models/client')(db.sequelize, db.Sequelize);
 
+const getClient = async (req) => {
+  const { userId } = req;
+  const { id } = req.params;
+  const client = await Client.findOne({
+    where: {
+      [Op.and]: [
+        { id },
+        { userId },
+      ],
+    },
+  });
+
+  if (!client) {
+    throw new CustomError({
+      status: 404,
+      message: `Client with the id ${id} not found.`,
+    });
+  }
+
+  return { client };
+};
+
 const getAllClients = async (req) => {
   const { userId } = req;
   const clients = await Client.findAll({ where: { userId } });
@@ -72,6 +94,7 @@ const deleteClient = async (req) => {
 };
 
 module.exports = {
+  getClient,
   getAllClients,
   createClient,
   updateClient,
