@@ -3,6 +3,7 @@ const express = require('express');
 const clientsRouter = express.Router();
 const { clientsController } = require('../controllers');
 const { controllerWithTryCatch } = require('../utils');
+const { clientSchema } = require('../utils/schemaValidations');
 
 const {
   bodyValidator,
@@ -18,6 +19,17 @@ clientsRouter.get('/',
   controllerWithTryCatch({
     callback: clientsController.getAllClients,
     statusSuccess: 200,
+  }));
+
+clientsRouter.post('/',
+  [
+    decodeToken,
+    validateToken,
+    bodyValidator(clientSchema.client),
+  ],
+  controllerWithTryCatch({
+    callback: clientsController.createClient,
+    statusSuccess: 201,
   }));
 
 module.exports = clientsRouter;
