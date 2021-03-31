@@ -11,6 +11,16 @@ const {
   decodeToken,
 } = require('../middlewares');
 
+clientsRouter.get('/:id',
+  [
+    decodeToken,
+    validateToken,
+  ],
+  controllerWithTryCatch({
+    callback: clientsController.getClient,
+    statusSuccess: 200,
+  }));
+
 clientsRouter.get('/',
   [
     decodeToken,
