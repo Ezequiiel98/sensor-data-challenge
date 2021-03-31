@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Home from './../pages/Home.js';
 
 const routes = [
@@ -6,13 +7,25 @@ const routes = [
     path: '/',
     exact: true,
     title: 'Home',
-    component: () => <Home />,
-  }, 
+    component: () => <Redirect to='/clients' />
+  },
   {
-    path: '/prueba',
+    path: '/clients',
     exact: true,
-    title: 'Prueba',
-    component: () =>  <h1>ahre </h1>
+    title: 'Clients',
+    component: () => <h1>Clients</h1>
+  },
+  {
+    path: '/clients/new',
+    exact: true,
+    title: 'New client',
+    component: () => <h1>Clients new</h1>
+  },
+  {
+    path: '/maps',
+    exact: true,
+    title: 'Maps',
+    component: () => <h1>maps</h1>
   }
 ];
 

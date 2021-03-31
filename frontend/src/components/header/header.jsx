@@ -70,13 +70,7 @@ class Header extends React.Component {
 						)}
 						
 						<ul className="navbar-nav navbar-right">
-							<SearchForm />
-							<DropdownNotification />
-							
-							{pageHeaderLanguageBar && (
-								<DropdownLanguage />
-							)}
-							
+						
 							<DropdownProfile />
 							
 							{pageTwoSidebar && (

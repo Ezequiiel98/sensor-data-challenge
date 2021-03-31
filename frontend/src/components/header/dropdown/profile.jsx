@@ -1,42 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-class DropdownProfile extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.toggle = this.toggle.bind(this);
-		this.state = {
-			dropdownOpen: false
-		};
-	}
-
-	toggle() {
-		this.setState(prevState => ({
-			dropdownOpen: !prevState.dropdownOpen
-		}));
-	}
+export default function DropdownProfile() {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const toggle = () => setDropdownOpen(!dropdownOpen);
   
-	render() {
-		return (
-			<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} className="dropdown navbar-user" tag="li">
-				<DropdownToggle tag="a">
-					<div className="image image-icon bg-black text-grey-darker">
-						<i className="fa fa-user"></i>
-					</div>
-					<span className="d-none d-md-inline">Adam Schwartz</span> <b className="caret"></b>
-				</DropdownToggle>
-				<DropdownMenu className="dropdown-menu dropdown-menu-right" tag="ul">
-					<DropdownItem>Edit Profile</DropdownItem>
-					<DropdownItem><span className="badge badge-danger pull-right">0</span> Inbox</DropdownItem>
-					<DropdownItem>Calendar</DropdownItem>
-					<DropdownItem>Setting</DropdownItem>
-					<div className="dropdown-divider"></div>
-					<DropdownItem>Log Out</DropdownItem>
-				</DropdownMenu>
-			</Dropdown>
-		);
-	}
+  return (
+    <Dropdown 
+      isOpen={dropdownOpen} 
+      toggle={toggle} 
+      className="dropdown navbar-user" 
+      tag="li" 
+      style={{cursor: 'pointer'}}
+    >
+      <DropdownToggle tag="a">
+        <div className="image image-icon bg-black text-grey-darker">
+          <i className="fa fa-user"></i>
+        </div>
+        <span className="d-none d-md-inline">Username</span> <b className="caret"></b>
+      </DropdownToggle>
+      <DropdownMenu className="dropdown-menu dropdown-menu-right" tag="ul">
+        <DropdownItem>Log Out</DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  );
 };
 
-export default DropdownProfile;
