@@ -1,7 +1,8 @@
 import React from 'react';
+import Table from '../components/table/table';
 
 export default function Clients() {
   return (
-    <h1>clients</h1>
+    <Table />
   ); 
 }
