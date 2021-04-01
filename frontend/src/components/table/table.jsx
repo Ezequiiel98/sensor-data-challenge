@@ -6,7 +6,7 @@ import $ from 'jquery';
 
 import getId from '../../utils/uniqueId.js';
 
-export default function Table({ items }) {
+export default function Table({ headItems, bodyItems }) {
   const id = `table-${getId()}`;
   
   useEffect(() => {
@@ -21,17 +21,30 @@ export default function Table({ items }) {
    <table id={id}>
      <thead>
        <tr>
-         <th>thead</th>
+         {headItems.map(item => <td>{ item }</td>)}
        </tr>
      </thead>
      <tbody>
-       <tr>
-         <td>tbody</td>
-       </tr>
+       {
+         bodyItems.map((item) => ( 
+         <tr>
+           { Object.keys(item).map(key => {
+             if(key !== 'id') {
+               return (<td>{
+                 typeof item[key] === 'boolean' ? 
+                   item[key].toString()
+                 : item[key] || 'none'
+               }</td>)
+             }} 
+           ) 
+           }
+         </tr>
+         ))
+       }
      </tbody>
      <tfoot>
        <tr>
-         <th>tfoot</th>
+         {headItems.map(item => <td>{ item }</td>)}
        </tr>
      </tfoot>
    </table>
