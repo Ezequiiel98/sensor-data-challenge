@@ -1,28 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { 
   Button,
-  Modal, 
+  Modal as BoostrapModal, 
   ModalHeader, 
   ModalBody
 } from 'reactstrap';
 
-const ModalExample = ({ title, children, showModal }) => {
-
-  const [modal, setModal] = useState(showModal || false);
-
-  const toggle = () => setModal(!modal);
+export default function Modal ({ 
+  title,
+  children, 
+  showModal, 
+  setShowModal 
+}) {
+  const toggle = () => setShowModal(!showModal);
 
   return (
     <div>
       <Button color="danger" onClick={toggle}>abrir modal</Button>
-      <Modal size="lg" isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>{title || 'title modal'}</ModalHeader>        
+      <BoostrapModal size="lg" isOpen={showModal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>{title}</ModalHeader>        
         <ModalBody>
           { children }
         </ModalBody>
-      </Modal>
+      </BoostrapModal>
     </div>
   );
 }
 
-export default ModalExample;
+Modal.propTypes = {
+  children: PropTypes.node.isRequired,
+  showModal: PropTypes.bool.isRequired,
+  setShowModal: PropTypes.func.isRequired,
+  title: PropTypes.string,
+}
+
+Modal.defaultProps = {
+  title: 'default modal title',
+}
