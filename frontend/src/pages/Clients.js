@@ -40,29 +40,66 @@ export default function Clients() {
   const handleClickButtonUpdate = (id) => {
     setItemToUpdate(dataClients.filter(client => client.id === id)[0]);
     setShowModal(true);
-    setDataModalAlert((...last) => ({ ...last, show: false }));
   };
 
   const handleDelete = async (id) => { 
+    setDataModalAlert((last) => ({...last, show: false}));
+
     try{ 
       const data = await httpDelete(`/clients/${id}`);
-      getAllClients()
+      getAllClients();
+      setDataModalAlert({ 
+        show: true,
+        type: 'success',
+        title: 'Cliente eliminado',
+        text: 'El cliente fue eliminado exítosamente',
+        onCancel: () => setDataModalAlert((last) => ({ ...last, show: false })),
+        onConfirm: () => setDataModalAlert((last) => ({ ...last, show: false })),
+      });
     } catch (e) {
-      setDataModalAlert({ ...modalError, show: true });
+      setDataModalAlert({ ...modalError, show: true,
+        onCancel: () => setDataModalAlert((last) => ({ ...last, show: false })),
+        onConfirm: () => setDataModalAlert((last) => ({ ...last, show: false })),
+      });
     }
   };
-  
+
+  const handleClickButtonDelete = async (id) => { 
+    setDataModalAlert({
+      show: true,
+      type: 'warning',
+      title: 'Borrar cliente',
+      text: 'Esta seguro de borrar este cliente?',
+      showCancelButton: true,
+      onConfirm: () => handleDelete(id),
+      onCancel: () => setDataModalAlert((last) => ({ ...last, show: false })),
+    })  
+  };
+
+
   const handleClickCreateNewClient = () => {
     setItemToUpdate();
     setShowModal(true);
   };
-  
+
   const handleCreateNewClient = async (client) => {
     try { 
       const data = await httpPost('/clients', client);
       getAllClients()
+      setShowModal(false);
+      setDataModalAlert({ 
+        show: true,
+        type: 'success',
+        title: 'Cliente creado',
+        text: 'El cliente fue creado exítosamente',
+        onCancel: () => setDataModalAlert((last) => ({ ...last, show: false })),
+        onConfirm: () => setDataModalAlert((last) => ({ ...last, show: false })),
+      });
     } catch (e) {
-      setDataModalAlert({ ...modalError, show: true });
+      setDataModalAlert({ ...modalError, show: true,
+        onCancel: () => setDataModalAlert((last) => ({ ...last, show: false })),
+        onConfirm: () => setDataModalAlert((last) => ({ ...last, show: false })),
+      });
     }
   };
 
@@ -76,11 +113,17 @@ export default function Clients() {
         title: 'Cliente editado', 
         type: 'success', 
         text: 'Cliente editado exítosamente', 
+        onCancel: () => setDataModalAlert((last) => ({ ...last, show: false })),
+        onConfirm: () => setDataModalAlert((last) => ({ ...last, show: false })),
       });
     } catch (e) {
-      setDataModalAlert({ ...modalError, show: true });
+      setDataModalAlert({ ...modalError, show: true,
+        onCancel: () => setDataModalAlert((last) => ({ ...last, show: false })),
+        onConfirm: () => setDataModalAlert((last) => ({ ...last, show: false })),
+      });
     }
   }
+
   return (
     <>
       <ModalAlert 
@@ -95,9 +138,9 @@ export default function Clients() {
       <Table 
         headItems={headItems} 
         bodyItems={dataClients} 
-        onDelete={handleDelete} 
+        onDelete={handleClickButtonDelete} 
         onUpdate={handleClickButtonUpdate} 
-     />
+      />
       <Modal 
         title={itemToUpdate ? 'Actualizar Cliente' : 'Crear Cliente'} 
         setShowModal={setShowModal}

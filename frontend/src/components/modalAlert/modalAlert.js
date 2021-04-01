@@ -11,6 +11,7 @@ const Modal = ({
   showCancelButton,
   showConfirmButton,
   onConfirm,
+  onCancel,
   setShow,
   show,
 }) => {  
@@ -38,6 +39,7 @@ const Modal = ({
 
   const handleOnClose = async () => {
     try {                  
+      onCancel();
       if (setShow) {
         setShow(false);
       } 
@@ -51,7 +53,8 @@ const Modal = ({
       show={show}
       title={title}
       text={text}
-      confirmButtonColor={'#a5dc86'} 
+      confirmButtonColor={'#a5dc86'}      showCancelButton={showCancelButton} 
+      showConfirmButton={showConfirmButton}
       icon={type}     
       onConfirm={ handleOnConfirm }
       didClose={ handleOnClose }
@@ -82,6 +85,7 @@ Modal.defaultProps = {
   type: 'success',
   show: false,  
   onConfirm: () => {}, 
+  onCancel: () => {}, 
   setShow: null,   
 }
 
