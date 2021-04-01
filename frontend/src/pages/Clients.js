@@ -13,7 +13,7 @@ export default function Clients() {
   const [dataClients, setDataClients] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [itemToUpdate, setItemToUpdate] = useState();
-  const { isFetching, httpGet, httpUpdate, httpDelete } = useHttp();
+  const { isFetching, httpGet, httpPost, httpUpdate, httpDelete } = useHttp();
 
   const getAllClients = async () => {
     try {
@@ -39,11 +39,20 @@ export default function Clients() {
       console.log(e);
     }
   };
-
-  const handleCreateNewClient = () => {
+  
+  const handleClickCreateNewClient = () => {
     setItemToUpdate();
     setShowModal(true);
-  }
+  };
+  
+  const handleCreateNewClient = async (client) => {
+    try { 
+      const data = await httpPost('/clients', client);
+      getAllClients()
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleUpdate = async (client) => {
     try{ 
@@ -56,7 +65,7 @@ export default function Clients() {
   return (
     <>
       <button
-        onClick={handleCreateNewClient}
+        onClick={handleClickCreateNewClient}
         className="mb-4 mt-4 pt-2 pb-2 pl-2 pr-2 btn btn-info"
       >
         Crear Nuevo Cliente
