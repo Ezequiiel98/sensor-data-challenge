@@ -5,14 +5,22 @@ import { useHttp } from '../hooks/useHttp';
 
 import Table from '../components/table/table';
 import Modal from '../components/Modal/modal';
+import ModalAlert from '../components/modalAlert/modalAlert';
 import FormClients from '../components/FormClients/formClients';
 
 const headItems = ['Razón social', 'Nro. de Ruc', 'Direccion', 'Pais','Ciudad', 'Codigo Postal', 'Zona', 'Fax', 'Telefono','Email', 'Web', 'Seg. Transitos', 'Seg. Carga Suelta', 'Activo', 'Acciones'];
 
+const modalError = {
+  title: 'Error', 
+  type: 'error', 
+  text: 'Húbo un error, intente mas tarde',
+};
+
 export default function Clients() {
   const [dataClients, setDataClients] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [itemToUpdate, setItemToUpdate] = useState();
+  const [itemToUpdate, setItemToUpdate] = useState({});
+  const [dataModalAlert, setDataModalAlert] = useState({...modalError});   
   const { isFetching, httpGet, httpPost, httpUpdate, httpDelete } = useHttp();
 
   const getAllClients = async () => {
@@ -20,7 +28,10 @@ export default function Clients() {
       const { data: { clients } } = await httpGet('/clients');
       setDataClients(clients);
     } catch (e) {
-      console.log(e);
+      setDataModalAlert({
+        ...modalError,
+        show: true,
+      });
     }
   };
 
@@ -29,6 +40,7 @@ export default function Clients() {
   const handleClickButtonUpdate = (id) => {
     setItemToUpdate(dataClients.filter(client => client.id === id)[0]);
     setShowModal(true);
+    setDataModalAlert((...last) => ({ ...last, show: false }));
   };
 
   const handleDelete = async (id) => { 
@@ -36,7 +48,7 @@ export default function Clients() {
       const data = await httpDelete(`/clients/${id}`);
       getAllClients()
     } catch (e) {
-      console.log(e);
+      setDataModalAlert({ ...modalError, show: true });
     }
   };
   
@@ -50,7 +62,7 @@ export default function Clients() {
       const data = await httpPost('/clients', client);
       getAllClients()
     } catch (e) {
-      console.log(e);
+      setDataModalAlert({ ...modalError, show: true });
     }
   };
 
@@ -58,12 +70,22 @@ export default function Clients() {
     try{ 
       const data = await httpUpdate(`/clients/${client.id}`, client);
       getAllClients()
+      setShowModal(false)
+      setDataModalAlert({
+        show: true,
+        title: 'Cliente editado', 
+        type: 'success', 
+        text: 'Cliente editado exítosamente', 
+      });
     } catch (e) {
-      console.log(e);
+      setDataModalAlert({ ...modalError, show: true });
     }
   }
   return (
     <>
+      <ModalAlert 
+        {...dataModalAlert}
+      />
       <button
         onClick={handleClickCreateNewClient}
         className="mb-4 mt-4 pt-2 pb-2 pl-2 pr-2 btn btn-info"
