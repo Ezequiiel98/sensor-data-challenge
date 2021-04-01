@@ -1,9 +1,10 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types';
 import axios from 'axios'
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
-export const useHttp = (initialFetchingState = false) => {
+export const useHttp = (initialFetchingState) => {
   const [isFetching, setIsFetching] = useState(initialFetchingState);
 
   const getTokenFromStorageAndSetHeaders = () => {
@@ -54,4 +55,12 @@ export const useHttp = (initialFetchingState = false) => {
   };
 
   return { isFetching, httpGet, httpPost, httpUpdate, httpDelete };
+}
+
+useHttp.propTypes = {
+ initialFetchingState: PropTypes.bool, 
+}
+
+useHttp.defaultProps = {
+ initialFetchingState: false, 
 }
