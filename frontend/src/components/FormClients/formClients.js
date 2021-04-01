@@ -7,6 +7,8 @@ import {
   Input, 
 } from 'reactstrap';
 
+import { useHttp } from '../../hooks/useHttp';
+
 import CustomInput from './input';
 import CustomSelect from './select';
 
@@ -14,9 +16,7 @@ import { INPUTS } from './constants/inputs';
 import { initialStateForm,  initialStateFormErrors } from './constants/initialStates';
 
 
-// borrar esto cuando agregue el servicio de enviar el form
-const isFetching = false;
-export default function FormClients({ dataClient }) {
+export default function FormClients({ dataClient, isFetching, onUpdate, onCreate }) {
   const initDataClient = dataClient ? { 
     ...initialStateForm, 
     ...dataClient } : initialStateForm;
@@ -29,13 +29,14 @@ export default function FormClients({ dataClient }) {
     setFormData((lastFormData) => ({ ...lastFormData, [name]: value }));
     setFormErrors((lastFormErrors) => ({ ...lastFormErrors, [name]: null }));
   }
-  
+
   const handleSubmit = (e) => {
     e.preventDefault(); 
     if (isUpdate) {
-     return  console.log('do update');
-    } 
-    return  console.log('create');
+      onUpdate(formData);
+    } else { 
+      onCreate(formData);
+    }
   }
   
   const textButton = isUpdate ? 'Actualizar Cliente' : 'Crear Cliente';
@@ -64,13 +65,13 @@ export default function FormClients({ dataClient }) {
             type="checkbox"
             name="active"
             defaultChecked={formData.active} 
-            value={formData.active} 
+            onChange={() => setFormData((last) => ({...last, active: !formData.active}))}
           /> { ' '}
           Activo
         </Label>
       </FormGroup>
       <Button type="submit" className="btn btn-primary w-100">
-        { isFetching ?  <i class="fas fa-spinner fa-pulse"></i> : textButton }
+        { isFetching ?  <i className="fas fa-spinner fa-pulse"></i> : textButton }
       </Button>
     </Form>
   );
