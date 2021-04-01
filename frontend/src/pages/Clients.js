@@ -4,7 +4,39 @@ import getId from '../utils/uniqueId';
 
 const mockClients = [
   {
-    id: 9,
+    id: getId(),
+    businessName: 'some business',
+    rucNumber: 0,
+    address: 'some address',
+    country: 'some country',
+    postalCode: 1321,
+    zone: 'sur',
+    phone: 12321312,
+    fax: 'asdasdas',
+    web: 'pepito.com',
+    email: 'pepito@gmail.com',
+    transitInsurance: 'si',
+    transitCargeInsurance: 'si',
+    active: false,
+  },
+  {
+    id: getId(),
+    businessName: 'some business',
+    rucNumber: 0,
+    address: 'some address',
+    country: 'some country',
+    postalCode: 1321,
+    zone: 'sur',
+    phone: 12321312,
+    fax: 'asdasdas',
+    web: 'pepito.com',
+    email: 'pepito@gmail.com',
+    transitInsurance: 'si',
+    transitCargeInsurance: 'si',
+    active: false,
+  },
+  {
+    id: getId(),
     businessName: 'some business',
     rucNumber: 2,
     address: 'some address',
@@ -20,23 +52,7 @@ const mockClients = [
     active: false,
   },
   {
-    id: 9,
-    businessName: 'some business',
-    rucNumber: 5,
-    address: 'some address',
-    country: 'some country',
-    postalCode: 1321,
-    zone: 'sur',
-    phone: 12321312,
-    fax: 'asdasdas',
-    web: 'pepito.com',
-    email: 'pepito@gmail.com',
-    transitInsurance: 'si',
-    transitCargeInsurance: 'si',
-    active: false,
-  },
-  {
-    id: 9,
+    id: getId(),
     businessName: 'some business',
     rucNumber: 2,
     address: 'some address',
@@ -52,23 +68,7 @@ const mockClients = [
     active: false,
   },
   {
-    id: 9,
-    businessName: 'some business',
-    rucNumber: 2,
-    address: 'some address',
-    country: 'some country',
-    postalCode: 1321,
-    zone: 'sur',
-    phone: 12321312,
-    fax: 'asdasdas',
-    web: 'pepito.com',
-    email: 'pepito@gmail.com',
-    transitInsurance: 'si',
-    transitCargeInsurance: 'si',
-    active: false,
-  },
-  {
-    id: 9,
+    id: getId(),
     businessName: 'some business',
     rucNumber: 2,
     address: 'some address',
@@ -85,7 +85,7 @@ const mockClients = [
   },
 ];
 
-const headItems = ['Razón social', 'Nro. de Ruc', 'Direccion', 'Pais','Ciudad', 'Codigo Postal', 'Zona', 'Fax', 'Email', 'Web', 'Seg. Transitos', 'Seg. Carga Suelta', 'Activo'];
+const headItems = ['Razón social', 'Nro. de Ruc', 'Direccion', 'Pais','Ciudad', 'Codigo Postal', 'Zona', 'Fax', 'Email', 'Web', 'Seg. Transitos', 'Seg. Carga Suelta', 'Activo', 'Acciones'];
 
 export default function Clients() {
   return (
