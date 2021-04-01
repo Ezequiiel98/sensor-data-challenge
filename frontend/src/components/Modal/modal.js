@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { 
-  Button,
   Modal as BoostrapModal, 
   ModalHeader, 
   ModalBody
@@ -17,7 +16,6 @@ export default function Modal ({
 
   return (
     <div>
-      <Button color="danger" onClick={toggle}>abrir modal</Button>
       <BoostrapModal size="lg" isOpen={showModal} toggle={toggle}>
         <ModalHeader toggle={toggle}>{title}</ModalHeader>        
         <ModalBody>
