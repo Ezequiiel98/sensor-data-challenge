@@ -14,6 +14,11 @@ export const validations = {
     max: 200,
     label: 'Dirección',
   },
+  city: {
+    min: 3,
+    max: 200,
+    label: 'Ciudad',
+  },
   country: {
     min: 3,
     max: 200,

@@ -27,6 +27,12 @@ const INPUTS = [
  },
  {
    key: getId(),
+   type: 'text',
+   name: 'city',
+   label: 'Ciudad',
+ },
+ {
+   key: getId(),
    type: 'number',
    name: 'postalCode',
    label: 'Codígo Postal',

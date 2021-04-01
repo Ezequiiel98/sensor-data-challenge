@@ -8,7 +8,7 @@ import Modal from '../components/Modal/modal';
 import ModalAlert from '../components/modalAlert/modalAlert';
 import FormClients from '../components/FormClients/formClients';
 
-const headItems = ['Razón social', 'Nro. de Ruc', 'Direccion', 'Pais','Ciudad', 'Codigo Postal', 'Zona', 'Fax', 'Telefono','Email', 'Web', 'Seg. Transitos', 'Seg. Carga Suelta', 'Activo', 'Acciones'];
+const headItems = ['Razón social', 'Nro. de Ruc', 'Direccion', 'Pais','Ciudad', 'Codigo Postal', 'Zona', 'Telefono',  'Fax', 'Email', 'Web', 'Seg. Transitos', 'Seg. Carga Suelta', 'Activo', 'Acciones'];
 
 const modalError = {
   title: 'Error', 
