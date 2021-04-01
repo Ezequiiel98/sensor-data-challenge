@@ -63,14 +63,14 @@ export default function TBodyItems({
 }
 
 TBodyItems.propTypes = {
-  items: PropTypes.array.isRequired,
+  items: PropTypes.array,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
   onUpdate: PropTypes.func,
   onDelete: PropTypes.func,
 };
 
-TBodyItems.propTypes = {
+TBodyItems.defaultProps = {
   canEdit: false, 
   canDelete: false,
   onUpdate: null,
