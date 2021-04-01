@@ -31,7 +31,14 @@ export default function Clients() {
     setShowModal(true);
   };
 
-  const handleDelete = (id) => console.log(id);
+  const handleDelete = async (id) => { 
+    try{ 
+      const data = await httpDelete(`/clients/${id}`);
+      getAllClients()
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleCreateNewClient = () => {
     setItemToUpdate();
@@ -39,7 +46,6 @@ export default function Clients() {
   }
 
   const handleUpdate = async (client) => {
-    const { id } = client;
     try{ 
       const data = await httpUpdate(`/clients/${client.id}`, client);
       getAllClients()
