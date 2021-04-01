@@ -2,22 +2,26 @@ const validateLength = ({
   str, 
   min = 1, 
   max = 100,
-  name = 'Campo',
-  isNumber = false,
+  label = '',
 }) => { 
   const  result = { isValid: true, error: null };
 
-  str = isNumber ? str.toString() : str;
 
-  if (str < min) {
-    result.isValid = false;
-    result.error = `El ${name} debe ser mayor a ${min} caracteres`
+  if (typeof str === 'number') {
+    str = str.toString();
   }
 
-  if (str > max) {
+  if (str.length < min) {
     result.isValid = false;
-    result.error = `El ${name} debe ser menor a ${max} caracteres`
+    result.error = `El campo ${label} debe ser mayor a ${min} caracteres`
+  }
+
+  if (str.length > max) {
+    result.isValid = false;
+    result.error = `El campo ${label} debe ser menor a ${max} caracteres`
   }
   
   return result;
 }
+
+export default validateLength;
