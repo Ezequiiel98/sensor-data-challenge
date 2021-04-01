@@ -8,7 +8,8 @@ import {
 } from 'reactstrap';
 
 import { useHttp } from '../../hooks/useHttp';
-import validateLength from '../../utils/validateLength';
+import { validateLength } from '../../utils/validateLength';
+import { validateEmail } from '../../utils/validateEmail';
 
 import CustomInput from './input';
 import CustomSelect from './select';
@@ -16,6 +17,7 @@ import CustomSelect from './select';
 import { INPUTS } from './constants/inputs';
 import { initialStateForm,  initialStateFormErrors } from './constants/initialStates';
 import { validations } from './constants/validations';
+
 
 
 export default function FormClients({ dataClient, isFetching, onUpdate, onCreate }) {
@@ -34,19 +36,26 @@ export default function FormClients({ dataClient, isFetching, onUpdate, onCreate
 
   const validateInputs = (inputsObj = {}) => {
     const resultInputsValidations = [];
+    const messageErrors = {};
 
     Object.keys(inputsObj).forEach(inputKey => {
-      if (validations[inputKey]) {
-        const { isValid, error } = validateLength({ 
-          str: inputsObj[inputKey], 
-          ...validations[inputKey], 
-        });
+      const validationsRules = validations[inputKey];
+      const inputValue = inputsObj[inputKey];
+      
+      if (validationsRules) {
+        const { isValid, error } = validationsRules.isEmail
+        ? validateEmail(inputValue, validationsRules.label)
+        : validateLength({ 
+            str: inputValue, 
+            ...validationsRules, 
+          });
         
         resultInputsValidations.push(isValid);
-        setFormErrors((lastErrors) => ({ ...lastErrors, [inputKey]: error }));
+        messageErrors[inputKey] = error;
       }
     });
 
+    setFormErrors((lastErrors) => ({ ...lastErrors, ...messageErrors }));
     return resultInputsValidations.every(result => result); 
   }
 
@@ -95,7 +104,7 @@ export default function FormClients({ dataClient, isFetching, onUpdate, onCreate
           Activo
         </Label>
       </FormGroup>
-      <Button type="submit" className="btn btn-primary w-100">
+      <Button type="submit" className="btn btn-primary w-100" disabled={isFetching}>
         { isFetching ?  <i className="fas fa-spinner fa-pulse"></i> : textButton }
       </Button>
     </Form>
