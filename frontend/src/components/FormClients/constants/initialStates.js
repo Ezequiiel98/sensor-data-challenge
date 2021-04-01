@@ -1,16 +1,16 @@
 const initialStateForm = {
   businessName: '',
-  rucNumber: 0,
+  rucNumber: '',
   address: '',
   country: '',
   postalCode: '',
-  zone: 'sur',
+  zone: 'Sur',
   phone: '',
   fax: '',
   web: '',
   email: '',
-  transitInsurance: 'opcional',
-  transitCargeInsurance: 'opcional',
+  transitInsurance: 'Opcional',
+  transitCargeInsurance: 'Opcional',
   active: false,
 }
 
