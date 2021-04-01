@@ -8,12 +8,14 @@ import {
 } from 'reactstrap';
 
 import { useHttp } from '../../hooks/useHttp';
+import validateLength from '../../utils/validateLength';
 
 import CustomInput from './input';
 import CustomSelect from './select';
 
 import { INPUTS } from './constants/inputs';
 import { initialStateForm,  initialStateFormErrors } from './constants/initialStates';
+import { validations } from './constants/validations';
 
 
 export default function FormClients({ dataClient, isFetching, onUpdate, onCreate }) {
@@ -30,13 +32,36 @@ export default function FormClients({ dataClient, isFetching, onUpdate, onCreate
     setFormErrors((lastFormErrors) => ({ ...lastFormErrors, [name]: null }));
   }
 
+  const validateInputs = (inputsObj = {}) => {
+    const resultInputsValidations = [];
+
+    Object.keys(inputsObj).forEach(inputKey => {
+      if (validations[inputKey]) {
+        const { isValid, error } = validateLength({ 
+          str: inputsObj[inputKey], 
+          ...validations[inputKey], 
+        });
+        
+        resultInputsValidations.push(isValid);
+        setFormErrors((lastErrors) => ({ ...lastErrors, [inputKey]: error }));
+      }
+    });
+
+    return resultInputsValidations.every(result => result); 
+  }
+
   const handleSubmit = (e) => {
-    e.preventDefault(); 
-    if (isUpdate) {
+    e.preventDefault();
+
+    const passAllValidations = validateInputs(formData);
+    
+    if (isUpdate && passAllValidations) {
       onUpdate(formData);
-    } else { 
+    };
+    
+    if (!isUpdate && passAllValidations) { 
       onCreate(formData);
-    }
+    };
   }
   
   const textButton = isUpdate ? 'Actualizar Cliente' : 'Crear Cliente';
