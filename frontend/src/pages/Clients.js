@@ -12,7 +12,6 @@ const headItems = ['Razón social', 'Nro. de Ruc', 'Direccion', 'Pais','Ciudad',
 export default function Clients() {
   const [dataClients, setDataClients] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [refreshTable, setRefreshTable] = useState(false);
   const [itemToUpdate, setItemToUpdate] = useState();
   const { isFetching, httpGet, httpUpdate, httpDelete } = useHttp();
 
@@ -61,9 +60,7 @@ export default function Clients() {
         bodyItems={dataClients} 
         onDelete={handleDelete} 
         onUpdate={handleClickButtonUpdate} 
-        refreshTable={refreshTable}
-        setRefreshTable={setRefreshTable}
-      />
+     />
       <Modal 
         title={itemToUpdate ? 'Actualizar Cliente' : 'Crear Cliente'} 
         setShowModal={setShowModal}
