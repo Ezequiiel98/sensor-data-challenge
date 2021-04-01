@@ -24,9 +24,6 @@ export default function Table({
 
     setupTable();
   }, [id]);
-
-  const handleDelete = id => console.log('delete: ' + id);
-  const handleUpdate = id => console.log('Update: ' + id);
   
   return (
    <table id={id}>
@@ -38,8 +35,8 @@ export default function Table({
      <tbody>
        <TBodyItems 
          items={bodyItems} 
-         onDelete={handleDelete}
-         onUpdate={handleUpdate}
+         onDelete={onDelete}
+         onUpdate={onUpdate}
          canDelete={Boolean(onDelete)}
          canEdit={Boolean(onUpdate)}
        />
