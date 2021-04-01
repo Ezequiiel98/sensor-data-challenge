@@ -52,6 +52,12 @@ const INPUTS = [
  },
   {
    key: getId(),
+   type: 'email',
+   name: 'email',
+   label: 'Email',
+ },
+  {
+   key: getId(),
    type: 'text',
    name: 'web',
    label: 'Web',
