@@ -8,22 +8,19 @@ import $ from 'jquery';
 import getId from '../../utils/uniqueId.js';
 import TBodyItems from './components/TBodyItems/TBodyItems.js';
 
-
 export default function Table({ 
   headItems, 
   bodyItems, 
   onDelete,
-  onUpdate 
+  onUpdate,
 }) { 
   const id = `table-${getId()}`;
-  
   useEffect(() => {
     const setupTable = () => $(document).ready(function () {
-        $(`#${id}`).DataTable();
+        const table = $(`#${id}`).DataTable();
     });
-
     setupTable();
-  }, [id, bodyItems]);
+  }, [id]);
   
   return (
    <table id={id}>

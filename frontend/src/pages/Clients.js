@@ -12,14 +12,13 @@ const headItems = ['Razón social', 'Nro. de Ruc', 'Direccion', 'Pais','Ciudad',
 export default function Clients() {
   const [dataClients, setDataClients] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [refreshTable, setRefreshTable] = useState(false);
   const [itemToUpdate, setItemToUpdate] = useState();
-  const { isFetching, httpGet } = useHttp();
+  const { isFetching, httpGet, httpUpdate, httpDelete } = useHttp();
 
   const getAllClients = async () => {
     try {
       const { data: { clients } } = await httpGet('/clients');
-      setDataClients(clients);
-      return;
       setDataClients(clients);
     } catch (e) {
       console.log(e);
@@ -28,7 +27,7 @@ export default function Clients() {
 
   useEffect(getAllClients, []);
 
-  const handleUpdate = (id) => {
+  const handleClickButtonUpdate = (id) => {
     setItemToUpdate(dataClients.filter(client => client.id === id)[0]);
     setShowModal(true);
   };
@@ -40,6 +39,15 @@ export default function Clients() {
     setShowModal(true);
   }
 
+  const handleUpdate = async (client) => {
+    const { id } = client;
+    try{ 
+      const data = await httpUpdate(`/clients/${client.id}`, client);
+      getAllClients()
+    } catch (e) {
+      console.log(e);
+    }
+  }
   return (
     <>
       <button
@@ -48,19 +56,25 @@ export default function Clients() {
       >
         Crear Nuevo Cliente
       </button>
-      {!isFetching && <Table 
+      <Table 
         headItems={headItems} 
         bodyItems={dataClients} 
         onDelete={handleDelete} 
-        onUpdate={handleUpdate} 
+        onUpdate={handleClickButtonUpdate} 
+        refreshTable={refreshTable}
+        setRefreshTable={setRefreshTable}
       />
-      }
       <Modal 
         title={itemToUpdate ? 'Actualizar Cliente' : 'Crear Cliente'} 
         setShowModal={setShowModal}
         showModal={showModal}
       >
-        <FormClients dataClient={itemToUpdate} />
+        <FormClients 
+          onUpdate={handleUpdate}
+          onCreate={handleCreateNewClient}
+          dataClient={itemToUpdate}
+          isFetching={isFetching}  
+        />
       </Modal>
     </>
   ); 
