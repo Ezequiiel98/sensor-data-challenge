@@ -1,12 +1,20 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 import $ from 'jquery'; 
 
 import getId from '../../utils/uniqueId.js';
+import TBodyItems from './components/TBodyItems/TBodyItems.js';
 
-export default function Table({ headItems, bodyItems }) {
+
+export default function Table({ 
+  headItems, 
+  bodyItems, 
+  onDelete,
+  onUpdate 
+}) { 
   const id = `table-${getId()}`;
   
   useEffect(() => {
@@ -17,36 +25,42 @@ export default function Table({ headItems, bodyItems }) {
     setupTable();
   }, [id]);
 
+  const handleDelete = id => console.log('delete: ' + id);
+  const handleUpdate = id => console.log('Update: ' + id);
+  
   return (
    <table id={id}>
      <thead>
        <tr>
-         {headItems.map(item => <td>{ item }</td>)}
+         {headItems.map(item => <td key={getId()}>{ item }</td>)}
        </tr>
      </thead>
      <tbody>
-       {
-         bodyItems.map((item) => ( 
-         <tr>
-           { Object.keys(item).map(key => {
-             if(key !== 'id') {
-               return (<td>{
-                 typeof item[key] === 'boolean' ? 
-                   item[key].toString()
-                 : item[key] || 'none'
-               }</td>)
-             }} 
-           ) 
-           }
-         </tr>
-         ))
-       }
+       <TBodyItems 
+         items={bodyItems} 
+         onDelete={handleDelete}
+         onUpdate={handleUpdate}
+         canDelete={Boolean(onDelete)}
+         canEdit={Boolean(onUpdate)}
+       />
      </tbody>
      <tfoot>
        <tr>
-         {headItems.map(item => <td>{ item }</td>)}
+         {headItems.map(item => <td key={getId()}>{ item }</td>)}
        </tr>
      </tfoot>
    </table>
   ); 
+}
+
+Table.propTypes = {
+  headItems: PropTypes.arrayOf(PropTypes.string).isRequired,
+  bodyItems: PropTypes.array.isRequired,
+  onUpdate: PropTypes.func,
+  onDelete: PropTypes.func,
+};
+
+Table.defaultProps = {
+  onUpdate: null,
+  onDelete: null,
 }
