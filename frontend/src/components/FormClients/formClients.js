@@ -18,14 +18,24 @@ import { initialStateForm,  initialStateFormErrors } from './constants/initialSt
 export default function FormClients() {
   const [formData, setFormData] = useState({...initialStateForm});
   const [formErrors, setFormErrors] = useState({...initialStateFormErrors});
+  
+  const handleChange = ({ target: { name, value } }) => {
+    setFormData((lastFormData) => ({ ...lastFormData, [name]: value }));
+    setFormErrors((lastFormErrors) => ({ ...lastFormErrors, [name]: null }));
+  }
   return (
     <Form>
       {
         INPUTS.map(dataInput => (
           dataInput.type === 'select' 
-          ? <CustomSelect {...dataInput} value={formData[dataInput.name]} />
+          ? <CustomSelect 
+              {...dataInput} 
+              onChange={handleChange}
+              value={formData[dataInput.name]} 
+            />
           : <CustomInput
               {...dataInput} 
+              onChange={handleChange}
               value={formData[dataInput.name]} 
               error={formErrors[dataInput.name]}
             />
@@ -33,7 +43,7 @@ export default function FormClients() {
       }
       <FormGroup check className="mt-2 mb-2">
         <Label>
-          <Input type="checkbox" name="active" /> { ' '}
+          <Input type="checkbox" name="active" value={formData.active} /> { ' '}
             Activo
           </Label>
         </FormGroup>
