@@ -27,7 +27,7 @@ export default function FormClients({
         value={value}
       >
         { options.map(option => (
-          <option key={getId()} value={option}>{option}</option>)
+          <option key={getId()} value={option.toLowerCase()}>{option}</option>)
         )}
       </Input>
     </FormGroup>
