@@ -1,4 +1,4 @@
-const validateLength = ({ 
+export const validateLength = ({ 
   str, 
   min = 1, 
   max = 100,
@@ -23,5 +23,3 @@ const validateLength = ({
   
   return result;
 }
-
-export default validateLength;
