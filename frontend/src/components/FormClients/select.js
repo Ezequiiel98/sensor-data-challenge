@@ -24,12 +24,12 @@ export default function FormClients({
         type="select"
         name={name}
         id={name}
+        value={value}
       >
         { options.map(option => (
           <option key={getId()} value={option}>{option}</option>)
         )}
       </Input>
     </FormGroup>
-    );
+  );
 }
-
