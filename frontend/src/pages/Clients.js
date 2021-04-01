@@ -1,107 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import getId from '../utils/uniqueId';
+import { useHttp } from '../hooks/useHttp';
 
 import Table from '../components/table/table';
 import Modal from '../components/Modal/modal';
 import FormClients from '../components/FormClients/formClients';
 
-const mockClients = [
-  {
-    id: getId(),
-    businessName: 'some business',
-    rucNumber: 0,
-    address: 'some address',
-    country: 'some country',
-    postalCode: 1321,
-    zone: 'centro',
-    phone: 12321312,
-    fax: 'asdasdas',
-    web: 'pepito.com',
-    email: 'pepito@gmail.com',
-    transitInsurance: 'si',
-    transitCargeInsurance: 'no',
-    active: false,
-  },
-  {
-    id: getId(),
-    businessName: 'some business',
-    rucNumber: 0,
-    address: 'some address',
-    country: 'some country',
-    postalCode: 1321,
-    zone: 'sur',
-    phone: 12321312,
-    fax: 'asdasdas',
-    web: 'pepito.com',
-    email: 'pepito@gmail.com',
-    transitInsurance: 'si',
-    transitCargeInsurance: 'si',
-    active: false,
-  },
-  {
-    id: getId(),
-    businessName: 'some business',
-    rucNumber: 2,
-    address: 'some address',
-    country: 'some country',
-    postalCode: 1321,
-    zone: 'sur',
-    phone: 12321312,
-    fax: 'asdasdas',
-    web: 'pepito.com',
-    email: 'pepito@gmail.com',
-    transitInsurance: 'si',
-    transitCargeInsurance: 'si',
-    active: false,
-  },
-  {
-    id: getId(),
-    businessName: 'some business',
-    rucNumber: 2,
-    address: 'some address',
-    country: 'some country',
-    postalCode: 1321,
-    zone: 'sur',
-    phone: 12321312,
-    fax: 'asdasdas',
-    web: 'pepito.com',
-    email: 'pepito@gmail.com',
-    transitInsurance: 'si',
-    transitCargeInsurance: 'si',
-    active: false,
-  },
-  {
-    id: getId(),
-    businessName: 'some business',
-    rucNumber: 2,
-    address: 'some address',
-    country: 'some country',
-    postalCode: 1321,
-    zone: 'sur',
-    phone: 12321312,
-    fax: 'asdasdas',
-    web: 'pepito.comasd',
-    email: 'pepito@gmail.com',
-    transitInsurance: 'si',
-    transitCargeInsurance: 'no',
-    active: true,
-  },
-];
-
-const headItems = ['Razón social', 'Nro. de Ruc', 'Direccion', 'Pais','Ciudad', 'Codigo Postal', 'Zona', 'Fax', 'Email', 'Web', 'Seg. Transitos', 'Seg. Carga Suelta', 'Activo', 'Acciones'];
+const headItems = ['Razón social', 'Nro. de Ruc', 'Direccion', 'Pais','Ciudad', 'Codigo Postal', 'Zona', 'Fax', 'Telefono','Email', 'Web', 'Seg. Transitos', 'Seg. Carga Suelta', 'Activo', 'Acciones'];
 
 export default function Clients() {
+  const [dataClients, setDataClients] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [itemToUpdate, setItemToUpdate] = useState();
+  const { isFetching, httpGet } = useHttp();
+
+  const getAllClients = async () => {
+    try {
+      const { data: { clients } } = await httpGet('/clients');
+      setDataClients(clients);
+      return;
+      setDataClients(clients);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(getAllClients, []);
 
   const handleUpdate = (id) => {
-    setItemToUpdate(mockClients.filter(client => client.id === id)[0]);
+    setItemToUpdate(dataClients.filter(client => client.id === id)[0]);
     setShowModal(true);
   };
 
   const handleDelete = (id) => console.log(id);
-  
+
   const handleCreateNewClient = () => {
     setItemToUpdate();
     setShowModal(true);
@@ -115,7 +48,13 @@ export default function Clients() {
       >
         Crear Nuevo Cliente
       </button>
-      <Table headItems={headItems} bodyItems={mockClients} onDelete={handleDelete} onUpdate={handleUpdate} />
+      {!isFetching && <Table 
+        headItems={headItems} 
+        bodyItems={dataClients} 
+        onDelete={handleDelete} 
+        onUpdate={handleUpdate} 
+      />
+      }
       <Modal 
         title={itemToUpdate ? 'Actualizar Cliente' : 'Crear Cliente'} 
         setShowModal={setShowModal}

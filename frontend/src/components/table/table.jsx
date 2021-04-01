@@ -23,7 +23,7 @@ export default function Table({
     });
 
     setupTable();
-  }, [id]);
+  }, [id, bodyItems]);
   
   return (
    <table id={id}>
