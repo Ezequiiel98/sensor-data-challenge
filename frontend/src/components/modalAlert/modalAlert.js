@@ -16,16 +16,6 @@ const Modal = ({
   show,
 }) => {  
 
-  let confirmButtonColor= '#a5dc86'; 
-
-  if (type === 'error') {
-    confirmButtonColor = '#f27474';
-  }  
-
-  if( type === 'info') {    
-    confirmButtonColor = '#3fc3ee;';
-  }
-
   const handleOnConfirm = async () => {
     try {      
       onConfirm();
@@ -53,7 +43,8 @@ const Modal = ({
       show={show}
       title={title}
       text={text}
-      confirmButtonColor={'#a5dc86'}      showCancelButton={showCancelButton} 
+      confirmButtonColor={'#a5dc86'}     
+      showCancelButton={showCancelButton} 
       showConfirmButton={showConfirmButton}
       icon={type}     
       onConfirm={ handleOnConfirm }

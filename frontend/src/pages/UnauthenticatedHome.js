@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import {
   Button, 
   Form,
-  Label,
 } from 'reactstrap';
 
 import Input from '../components/FormClients/input';

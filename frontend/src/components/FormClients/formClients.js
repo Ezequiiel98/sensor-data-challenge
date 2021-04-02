@@ -7,7 +7,6 @@ import {
   Input, 
 } from 'reactstrap';
 
-import { useHttp } from '../../hooks/useHttp';
 import { validateLength } from '../../utils/validateLength';
 import { validateEmail } from '../../utils/validateEmail';
 
