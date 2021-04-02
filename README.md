@@ -8,7 +8,7 @@
 	$ git clone https://github.com/Ezequiiel98/sensor-data-challenge
 ```
   - ## Backend
-    - ###	 Step 1.  Create file .env  and declare environment variables 
+    - ###	 Step 1.  Create file .env in folder backend  and declare environment variables 
     ``` bash  
     PORT_APP=    # default value -> 3001
     DB_USER=    # default value -> root
@@ -33,7 +33,7 @@
 
 
   - ## Frontend
--  ####	 Step 1.  Create file .env  and declare environment variables 
+-  ####	 Step 1.  Create file .env in folder frontend and declare environment variables 
     ``` bash
     # This must to be the same port where the backend runs 
     REACT_APP_API_URL =    //default value -> 3001 
