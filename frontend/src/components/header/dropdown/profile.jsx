@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+
+import { AuthContext } from '../../../context/AuthContext';
 
 export default function DropdownProfile() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dataAuth, setDataAuth] = useContext(AuthContext);
+
   const toggle = () => setDropdownOpen(!dropdownOpen);
-  
+
+  const handleLogout = () => {
+    setDataAuth({});
+    localStorage.removeItem('token');
+  }
+
   return (
     <Dropdown 
       isOpen={dropdownOpen} 
@@ -17,10 +26,10 @@ export default function DropdownProfile() {
         <div className="image image-icon bg-black text-grey-darker">
           <i className="fa fa-user"></i>
         </div>
-        <span className="d-none d-md-inline">Username</span> <b className="caret"></b>
+        <span className="d-none d-md-inline">{ dataAuth.username }</span> <b className="caret"></b>
       </DropdownToggle>
       <DropdownMenu className="dropdown-menu dropdown-menu-right" tag="ul">
-        <DropdownItem>Log Out</DropdownItem>
+        <DropdownItem onClick={handleLogout}>Cerrar Sesíon</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );
