@@ -40,7 +40,7 @@
     ```
 
 	- ####	Step 2.  Run Aplication
-  ``` bash 
+    ``` bash 
    # Enter in frontend folder
     $ cd frontend
     
@@ -49,7 +49,7 @@
 
    # Run proyect
 	  $ npm start    
-```
+    ```
    
 ### Built With
 
