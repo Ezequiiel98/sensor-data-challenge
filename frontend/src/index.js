@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './app.jsx';
 import { BrowserRouter } from 'react-router-dom';
 
+import { AuthProvider } from './context/AuthContext';
+
 // css
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -22,7 +24,9 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </BrowserRouter>,
   document.getElementById('root')
 );
