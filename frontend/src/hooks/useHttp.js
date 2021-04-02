@@ -17,7 +17,7 @@ export const useHttp = (initialFetchingState) => {
 
   const handleError = (err) => {
     setIsFetching(false);
-    throw new Error(err.response?.data?.data?.message || 'Húbo un error en la red');
+    throw new Error(err.response?.data?.data?.message || 500);
   }
 
   const requestWithTryCatch = async (callback, route, body) => {
