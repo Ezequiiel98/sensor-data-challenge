@@ -7,7 +7,7 @@ const validateToken = async (req, res, next) => {
   const { tokenUuid } = req;
 
   const token = await ValidToken.findOne({ where: { uuid: tokenUuid } });
-
+  
   if (!token) {
     return Response.error({
       res,

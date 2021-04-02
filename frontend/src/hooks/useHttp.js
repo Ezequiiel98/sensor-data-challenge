@@ -8,7 +8,7 @@ export const useHttp = (initialFetchingState) => {
   const [isFetching, setIsFetching] = useState(initialFetchingState);
 
   const getTokenFromStorageAndSetHeaders = () => {
-    const storedToken = window.localStorage.getItem('token');
+    const storedToken = localStorage.getItem('token');
     const config = storedToken !== null
       ? { headers: { authorization: storedToken } }
       : {}

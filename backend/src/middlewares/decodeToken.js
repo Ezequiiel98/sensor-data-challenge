@@ -4,7 +4,7 @@ const { Response } = require('../utils');
 
 const decodeToken = async (req, res, next) => {
   const token = req.headers['authorization'];
-
+  
   if (!token) {
     return Response.error({
       res,

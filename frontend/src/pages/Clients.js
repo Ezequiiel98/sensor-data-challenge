@@ -22,7 +22,7 @@ export default function Clients() {
   const [itemToUpdate, setItemToUpdate] = useState({});
   const [dataModalAlert, setDataModalAlert] = useState({...modalError});   
   const { isFetching, httpGet, httpPost, httpUpdate, httpDelete } = useHttp();
-
+  
   const getAllClients = async () => {
     try {
       const { data: { clients } } = await httpGet('/clients');
@@ -33,6 +33,7 @@ export default function Clients() {
         show: true,
       });
     }
+    return null;
   };
 
   useEffect(getAllClients, []);

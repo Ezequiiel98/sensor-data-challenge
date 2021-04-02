@@ -47,6 +47,7 @@ export default function UnauthenticatedHome() {
   const sendLogin = async() => {
     try {
       const { data: { user }  } = await httpPost('/auth/login', formData);
+      localStorage.setItem('token', user.token);
       setDataAuth({...user});
     } catch (e) {
       const error = e.message === '500' 
