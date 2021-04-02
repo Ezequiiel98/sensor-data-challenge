@@ -50,7 +50,12 @@
    # Run proyect
 	  $ npm start    
     ```
-   
+
+### User credentials
+  - username: test
+  - email: test@gmail.com
+  - password: 123456789
+ 
 ### Built With
 
 - [ReactJS](https://reactjs.org/)
