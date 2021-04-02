@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 module.exports = {
-  PORT_APP: process.env.PORT_APP || '3000',
+  PORT_APP: process.env.PORT_APP || '3001,
   NODE_ENV: process.env.NODE_ENV,
   ENV_IS_DEV: process.env.NODE_ENV === 'development',
   SECRET_JWT: process.env.SECRET_JWT || 'th1s1s_jwt_b35t_53cr3t',
