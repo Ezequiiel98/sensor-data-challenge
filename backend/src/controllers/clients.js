@@ -7,7 +7,7 @@ const db = require('../models');
 const Client = require('../models/client')(db.sequelize, db.Sequelize);
 
 const getClient = async (req) => {
-  const { userId } = req;
+  const { userId = 1 } = req;
   const { id } = req.params;
   const client = await Client.findOne({
     where: {
@@ -16,6 +16,7 @@ const getClient = async (req) => {
         { userId },
       ],
     },
+    attributes: { exclude: ['userId', 'createdAt', 'updatedAt'] },
   });
 
   if (!client) {
@@ -29,15 +30,15 @@ const getClient = async (req) => {
 };
 
 const getAllClients = async (req) => {
-  const { userId } = req;
-  const clients = await Client.findAll({ where: { userId } });
+  const { userId = 1 } = req;
+  const clients = await Client.findAll({ where: { userId }, attributes: { exclude: ['createdAt', 'updatedAt', 'userId'] } });
 
   return { clients };
 };
 
 const createClient = async (req) => {
   delete req.body.id;
-  const { userId } = req;
+  const { userId = 1 } = req;
 
   const client = await Client.create({ ...req.body, userId });
 
@@ -46,7 +47,7 @@ const createClient = async (req) => {
 
 const updateClient = async (req) => {
   delete req.body.id;
-  const { userId } = req;
+  const { userId = 1 } = req;
   const { id } = req.params;
   const existsClient = await Client.findOne({
     where: {
@@ -70,7 +71,7 @@ const updateClient = async (req) => {
 };
 
 const deleteClient = async (req) => {
-  const { userId } = req;
+  const { userId = 1 } = req;
   const { id } = req.params;
   const existsClient = await Client.findOne({
     where: {
