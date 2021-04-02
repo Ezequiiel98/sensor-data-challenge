@@ -43,29 +43,29 @@ export default function UnauthenticatedHome() {
     
     return { passwordIsValid, usernameIsValid };
   }
-  
+
+  const sendLogin = async() => {
+    try {
+      const { data: { user }  } = await httpPost('/auth/login', formData);
+      setDataAuth({...user});
+    } catch (e) {
+      const error = e.message === '500' 
+        ? 'Húbo un error, intente más tarde' 
+        : 'Usuario o contraseña incorrecto';
+     
+      setFormErrors((last) => ({
+        ...last,
+        password: error,
+      }));
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { passwordIsValid, usernameIsValid } = validateInputs();
 
     if (passwordIsValid && usernameIsValid) {
-       try {
-         const { data: { user }  } = await httpPost('/auth/login', formData);
-         console.log(user);
-         setDataAuth({...user});
-       } catch (e) {
-         if (e.message === '500') {
-           setFormErrors((last) => ({
-             ...last,
-             password: 'Húbo un error, intente más tarde'
-           }));
-         } else {
-           setFormErrors((last) => ({
-             ...last,
-             password: 'El usuario o contraseña incorrecto'
-           }));
-         }
-       }
+      sendLogin();
     }
   }
 
@@ -79,7 +79,7 @@ export default function UnauthenticatedHome() {
           error={formErrors.username}
           onChange={handleChange}
           type="text"  
-      />
+        />
         <Input 
           label="Contraseña"
           type="password"
@@ -88,9 +88,9 @@ export default function UnauthenticatedHome() {
           error={formErrors.password}
           onChange={handleChange}
         />
-      <Button type="submit" className="btn w-100" disabled={isFetching}>
-        { isFetching ?  <i className="fas fa-spinner fa-pulse"></i> : 'Enviar' }
-      </Button>
+        <Button type="submit" className="btn w-100" disabled={isFetching}>
+          { isFetching ?  <i className="fas fa-spinner fa-pulse"></i> : 'Enviar' }
+        </Button>
 
       </Form>
     </div>
