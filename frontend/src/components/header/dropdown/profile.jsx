@@ -1,15 +1,21 @@
 import React, { useState, useContext } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
+import { useHttp } from '../../../hooks/useHttp';
 import { AuthContext } from '../../../context/AuthContext';
 
 export default function DropdownProfile() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dataAuth, setDataAuth] = useContext(AuthContext);
-
+  const { httpGet } = useHttp();
   const toggle = () => setDropdownOpen(!dropdownOpen);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await httpGet('/auth/logout');
+    } catch (err) {
+      console.log('error');
+    }
     setDataAuth({});
     localStorage.removeItem('token');
   }
