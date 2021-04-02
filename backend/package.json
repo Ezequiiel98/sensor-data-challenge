@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node src/app",
     "dev": "cross-env NODE_ENV=development nodemon src/app",
     "db:drop":"npx sequelize-cli db:drop",
-    "db:init":"npx sequelize-cli db:create && npx sequelize db:migrate && npx sequelize db:seed:all"
+    "db:init":"npx sequelize-cli db:create && npx sequelize db:migrate && npx sequelize db:seed:all",
+    "start": "npm run db:init && cross-env NODE_ENV=production node src/app"
   },
   "keywords": [],
   "author": "",
