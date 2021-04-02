@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { PageSettings } from './../../config/page-settings.js';
 
+import { AuthContext }  from '../../context/AuthContext';
+
 export default function SidebarProfile() {
+  const [dataAuth] = useContext(AuthContext);
+  
   return (
     <ul className="nav">
       <li className={"nav-profile expand"}>
@@ -11,7 +15,7 @@ export default function SidebarProfile() {
           <i className="fa fa-user"></i>
         </div>
         <div className="info">
-          user name 
+          { dataAuth.username } 
         </div>
       </li>
     </ul>
