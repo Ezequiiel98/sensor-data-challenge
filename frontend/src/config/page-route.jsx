@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Home from './../pages/Home.js';
 import Clients from './../pages/Clients.js';
+import Maps from './../pages/Maps.js';
 
 const routes = [
   {
@@ -26,7 +27,7 @@ const routes = [
     path: '/maps',
     exact: true,
     title: 'Maps',
-    component: () => <h1>maps</h1>
+    component: () => <Maps />
   }
 ];
 
