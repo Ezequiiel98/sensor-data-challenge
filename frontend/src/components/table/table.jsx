@@ -20,30 +20,33 @@ export default function Table({
         const table = $(`#${id}`).DataTable();
     });
     setupTable();
+    return $(".dataTable-wrapper").find("table").DataTable().destroy(true);
   }, [id]);
   
   return (
-   <table id={id}>
-     <thead>
-       <tr>
-         {headItems.map(item => <td key={getId()}>{ item }</td>)}
-       </tr>
-     </thead>
-     <tbody>
-       <TBodyItems 
-         items={bodyItems} 
-         onDelete={onDelete}
-         onUpdate={onUpdate}
-         canDelete={Boolean(onDelete)}
-         canEdit={Boolean(onUpdate)}
-       />
-     </tbody>
-     <tfoot>
-       <tr>
-         {headItems.map(item => <td key={getId()}>{ item }</td>)}
-       </tr>
-     </tfoot>
-   </table>
+   <div>
+     <table id={id}>
+       <thead>
+         <tr>
+           {headItems.map(item => <td key={getId()}>{ item }</td>)}
+         </tr>
+       </thead>
+       <tbody>
+         <TBodyItems 
+           items={bodyItems} 
+           onDelete={onDelete}
+           onUpdate={onUpdate}
+           canDelete={Boolean(onDelete)}
+           canEdit={Boolean(onUpdate)}
+         />
+       </tbody>
+       <tfoot>
+         <tr>
+           {headItems.map(item => <td key={getId()}>{ item }</td>)}
+         </tr>
+       </tfoot>
+     </table>
+   </div>
   ); 
 }
 
