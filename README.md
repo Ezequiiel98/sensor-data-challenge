@@ -35,7 +35,7 @@
   - ## Frontend
 -  ####	 Step 1.  Create file .env in folder frontend and declare environment variables 
     ``` bash
-    # This must to be the same port where the backend runs 
+    # This must be the same port where the backend runs 
     REACT_APP_API_URL =    # default value -> 3001 
     ```
 
